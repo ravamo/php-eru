@@ -1,0 +1,5 @@
+AppBundle\Entity\RedCrossRelation:
+    relation_1:
+        name: Voluntario
+    relation_2:
+        name: Asimilado

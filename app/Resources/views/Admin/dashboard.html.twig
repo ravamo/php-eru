@@ -1,0 +1,339 @@
+
+
+{% extends base_template %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+{% endblock %}
+
+{% block title %}
+    {{ 'title_dashboard'|trans({}, 'SonataAdminBundle') }}
+{% endblock%}
+{% block breadcrumb %}{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="ion ion-ios-people-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Miembros reg.</span>
+                    <span class="info-box-number">{{ params.activeRosterMemberCount }}/{{ params.rosterMemberCount }}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-globe"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Operaciones</span>
+                    <span class="info-box-number">{{ params.operationsCount }}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-bolt"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Despliegues</span>
+                    <span class="info-box-number">{{ params.deploymentsCount }}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="ion ion-help"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">????</span>
+                    <span class="info-box-number">--</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Oficina territorial</label>
+                <select id="territorial-selection" class="form-control select2" style="width: 100%;">
+                    <option selected value="0" >Todas</option>
+                    {% for territorialOffice in params.territorialOffices %}
+                        <option value="{{ territorialOffice.id }}" >{{ territorialOffice.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <!-- GENDER CHART -->
+            <div class="box box-danger">
+                <div id="total-gender-donut" class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+                <div class="box-header with-border">
+                    <h3 class="box-title">Género</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body chart-responsive">
+                    <div class="chart" id="gender-chart" style="height: 300px; position: relative;"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+
+        <div class="col-md-3">
+            <!-- ERUS/PERSON CHART -->
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">ERUs/persona</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <canvas id="erus-person"></canvas>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+
+        <!-- /.col (LEFT) -->
+        <div class="col-md-6">
+            <!-- PEOPLE/ERU BY GENDER CHART -->
+            <div class="box box-success">
+                <div id="eru-gender-bar" class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+                <div class="box-header with-border">
+                    <h3 class="box-title">Personas/ERU por género</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="people-eru-gender"></canvas>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+        </div>
+        <!-- /.col (RIGHT) -->
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-blue-gradient">
+                    <div class="widget-user-image">
+                        <img class="img-circle" src="{{ asset('img/ucbs-color.png') }}" alt="eru ucbs">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">UCBS</h3>
+                    <h5 class="widget-user-desc">Cuidados básicos de la salud</h5>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Miembros regularizados <span class="pull-right badge bg-blue">{{ params.erus.UCBS.active }}</span></a></li>
+                        <li><a href="#">Sin regularizar <span class="pull-right badge bg-aqua">{{ params.erus.UCBS.unactive }}</span></a></li>
+                        <li><a href="#">Operaciones <span class="pull-right badge bg-green">{{ params.erus.UCBS.operations }}</span></a></li>
+                        <li><a href="#">Despliegues <span class="pull-right badge bg-red">{{ params.erus.UCBS.deployments }}</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+        <div class="col-md-4">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-red-gradient">
+                    <div class="widget-user-image">
+                        <img class="img-circle" src="{{ asset('img/telecom-color.png') }}" alt="eru telecom">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">IT & TELECOM</h3>
+                    <h5 class="widget-user-desc">Telecom</h5>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Miembros regularizados <span class="pull-right badge bg-blue">{{ params.erus.TELECOM.active }}</span></a></li>
+                        <li><a href="#">Sin regularizar <span class="pull-right badge bg-aqua">{{ params.erus.TELECOM.unactive }}</span></a></li>
+                        <li><a href="#">Operaciones <span class="pull-right badge bg-green">{{ params.erus.TELECOM.operations }}</span></a></li>
+                        <li><a href="#">Despliegues <span class="pull-right badge bg-red">{{ params.erus.TELECOM.deployments }}</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+        <div class="col-md-4">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-green-gradient">
+                    <div class="widget-user-image">
+                        <img class="img-circle" src="{{ asset('img/m15-color.png') }}" alt="eru telecom">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">M15</h3>
+                    <h5 class="widget-user-desc">Agua y saneamiento</h5>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Miembros regularizados <span class="pull-right badge bg-blue">{{ params.erus.M15.active }}</span></a></li>
+                        <li><a href="#">Sin regularizar <span class="pull-right badge bg-aqua">{{ params.erus.M15.unactive }}</span></a></li>
+                        <li><a href="#">Operaciones <span class="pull-right badge bg-green">{{ params.erus.M15.operations }}</span></a></li>
+                        <li><a href="#">Despliegues <span class="pull-right badge bg-red">{{ params.erus.M15.deployments }}</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-teal-gradient">
+                    <div class="widget-user-image">
+                        <img class="img-circle" src="{{ asset('img/sanmas-color.png') }}" alt="eru ucbs">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">SANMAS</h3>
+                    <h5 class="widget-user-desc">Saneamiento masivo</h5>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Miembros regularizados <span class="pull-right badge bg-blue">{{ params.erus.SANMAS.active }}</span></a></li>
+                        <li><a href="#">Sin regularizar <span class="pull-right badge bg-aqua">{{ params.erus.SANMAS.unactive }}</span></a></li>
+                        <li><a href="#">Operaciones <span class="pull-right badge bg-green">{{ params.erus.SANMAS.operations }}</span></a></li>
+                        <li><a href="#">Despliegues <span class="pull-right badge bg-red">{{ params.erus.SANMAS.deployments }}</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+        <div class="col-md-4">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-maroon-gradient">
+                    <div class="widget-user-image">
+                        <img class="img-circle" src="{{ asset('img/pss-color.png') }}" alt="eru telecom">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">PSS</h3>
+                    <h5 class="widget-user-desc">Psicosocial</h5>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Miembros regularizados <span class="pull-right badge bg-blue">{{ params.erus.PSS.active }}</span></a></li>
+                        <li><a href="#">Sin regularizar <span class="pull-right badge bg-aqua">{{ params.erus.PSS.unactive }}</span></a></li>
+                        <li><a href="#">Operaciones <span class="pull-right badge bg-green">{{ params.erus.PSS.operations }}</span></a></li>
+                        <li><a href="#">Despliegues <span class="pull-right badge bg-red">{{ params.erus.PSS.deployments }}</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+        <div class="col-md-4">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-yellow-gradient">
+                    <div class="widget-user-image">
+                        <img class="img-circle" src="{{ asset('img/log-color.png') }}" alt="eru telecom">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">LOG</h3>
+                    <h5 class="widget-user-desc">Logística</h5>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Miembros regularizados <span class="pull-right badge bg-blue">{{ params.erus.LOG.active }}</span></a></li>
+                        <li><a href="#">Sin regularizar <span class="pull-right badge bg-aqua">{{ params.erus.LOG.unactive }}</span></a></li>
+                        <li><a href="#">Operaciones <span class="pull-right badge bg-green">{{ params.erus.LOG.operations }}</span></a></li>
+                        <li><a href="#">Despliegues <span class="pull-right badge bg-red">{{ params.erus.LOG.deployments }}</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-light-blue-gradient">
+                    <div class="widget-user-image">
+                        <img class="img-circle" src="{{ asset('img/relief-color.png') }}" alt="eru telecom">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">RELIEF</h3>
+                    <h5 class="widget-user-desc">Distribuciones</h5>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Miembros regularizados <span class="pull-right badge bg-blue">{{ params.erus.RELIEF.active }}</span></a></li>
+                        <li><a href="#">Sin regularizar <span class="pull-right badge bg-aqua">{{ params.erus.RELIEF.unactive }}</span></a></li>
+                        <li><a href="#">Operaciones <span class="pull-right badge bg-green">{{ params.erus.RELIEF.operations }}</span></a></li>
+                        <li><a href="#">Despliegues <span class="pull-right badge bg-red">{{ params.erus.RELIEF.deployments }}</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script src="{{ asset('js/function-utils.js') }}"></script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
+
+{% endblock %}

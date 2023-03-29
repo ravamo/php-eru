@@ -1,0 +1,5 @@
+AppBundle\Entity\WorkGroup:
+    workgroup_1:
+        name: Grupo de trabajo 1
+    workgroup_2:
+        name: Grupo de trabajo 2

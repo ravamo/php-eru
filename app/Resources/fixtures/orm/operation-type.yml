@@ -1,0 +1,16 @@
+AppBundle\Entity\OperationType:
+    operationtype_1:
+        name: CICLON/TIFON/HURACAN
+    operationtype_2:
+        name: TERREMOTO
+    operationtype_3:
+        name: INCENDIO
+    operationtype_4:
+        name: TSUNAMI
+    operationtype_5:
+        name: OTROS
+    operationtype_6:
+        name: INUNDACIONES
+    operationtype_7:
+        name: MOVIMIENTOS DE POBLACIÓN
+

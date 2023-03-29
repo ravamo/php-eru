@@ -1,0 +1,6 @@
+AppBundle\Entity\Operation:
+    operation_{1..10}:
+        dateEvent: <dateTime()>
+        dateDeployment: <dateTime()>
+        operationType: @operationtype_*
+        eruTypes: ['@eru_*']

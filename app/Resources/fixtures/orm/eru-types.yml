@@ -1,0 +1,15 @@
+AppBundle\Entity\EruType:
+    eru_1:
+        name: UCBS
+    eru_2:
+        name: PSS
+    eru_3:
+        name: SANMAS
+    eru_4:
+        name: M15
+    eru_5:
+        name: RELIEF
+    eru_6:
+        name: LOG
+    eru_7:
+        name: TELECOM

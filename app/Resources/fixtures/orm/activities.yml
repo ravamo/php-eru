@@ -1,0 +1,5 @@
+AppBundle\Entity\Activity:
+    activity_1:
+        name: Actividad 1
+    activity_2:
+        name: Actividad 2

@@ -1,0 +1,12 @@
+AppBundle\Entity\RosterMember:
+    rostermember_{1..100}:
+        name: <firstName()>
+        surname: <lastName()>
+        mobilePhone: <phoneNumber()>
+        extraPhone: <phoneNumber()>
+        email: <freeEmail()>
+        active: <boolean(65)>
+        languages: ['@ingles_*','@frances_*']
+        eruTypes: ['@eru_*']
+        genre: '@genre_*'
+        redCrossRelation: '@relation_*'

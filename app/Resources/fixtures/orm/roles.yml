@@ -1,0 +1,11 @@
+AppBundle\Entity\Role:
+    role_1:
+        name: DELEGADO
+    role_2:
+        name: TEAM LEADER
+    role_3:
+        name: ADMIN/LOG
+    role_4:
+        name: ODK
+    role_5:
+        name: OTRO

@@ -1,0 +1,66 @@
+services:
+    app.admin.roster_member:
+        class: AppBundle\Admin\RosterMemberAdmin
+        arguments: [~, AppBundle\Entity\RosterMember, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RosterMember }
+
+    app.admin.eru_type:
+        class: AppBundle\Admin\EruTypeAdmin
+        arguments: [~, AppBundle\Entity\EruType, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EruType }
+
+    app.admin.language:
+        class: AppBundle\Admin\LanguageAdmin
+        arguments: [~, AppBundle\Entity\Language, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Language }
+
+    app.admin.operation:
+        class: AppBundle\Admin\OperationAdmin
+        arguments: [~, AppBundle\Entity\Operation, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Operation }
+
+    app.admin.operation_type:
+        class: AppBundle\Admin\OperationTypeAdmin
+        arguments: [~, AppBundle\Entity\OperationType, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: OperationType }
+
+    app.admin.role:
+        class: AppBundle\Admin\RoleAdmin
+        arguments: [~, AppBundle\Entity\Role, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Role }
+
+    app.admin.territorial_office:
+        class: AppBundle\Admin\TerritorialOfficeAdmin
+        arguments: [~, AppBundle\Entity\TerritorialOffice, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TerritorialOffice }
+
+    app.admin.work_group:
+        class: AppBundle\Admin\WorkGroupAdmin
+        arguments: [~, AppBundle\Entity\WorkGroup, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: WorkGroup }
+
+    app.admin.activity:
+        class: AppBundle\Admin\ActivityAdmin
+        arguments: [~, AppBundle\Entity\Activity, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Activity }
+
+    app.admin.skill:
+        class: AppBundle\Admin\SkillAdmin
+        arguments: [~, AppBundle\Entity\Skill, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Skill }
+
+    app.admin.deployment:
+        class: AppBundle\Admin\DeploymentAdmin
+        arguments: [~, AppBundle\Entity\Deployment, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Deployment }

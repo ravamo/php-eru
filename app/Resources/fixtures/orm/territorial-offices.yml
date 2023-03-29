@@ -1,0 +1,5 @@
+AppBundle\Entity\TerritorialOffice:
+    office_1:
+        name: Asturias
+    office_2:
+        name: Madrid

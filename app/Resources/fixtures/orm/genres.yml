@@ -1,0 +1,5 @@
+AppBundle\Entity\Genre:
+    genre_1:
+        name: Hombre
+    genre_2:
+        name: Mujer

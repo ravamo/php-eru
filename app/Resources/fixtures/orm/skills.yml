@@ -1,0 +1,19 @@
+AppBundle\Entity\Skill:
+    odk_1:
+        name: ODK
+        level: Básico
+    odk_2:
+        name: ODK
+        level: Medio
+    odk_3:
+        name: ODK
+        level: Avanzado
+    cash_1:
+        name: CASH TRANSFER
+        level: Básico
+    cash_2:
+        name: CASH TRANSFER
+        level: Medio
+    cash_3:
+        name: CASH TRANSFER
+        level: Avanzado

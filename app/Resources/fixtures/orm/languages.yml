@@ -1,0 +1,55 @@
+AppBundle\Entity\Language:
+    ingles_1:
+        name: Inglés
+        level: Básico
+    ingles_2:
+        name: Inglés
+        level: Medio
+    ingles_3:
+        name: Inglés
+        level: Avanzado
+    frances_1:
+        name: Francés
+        level: Básico
+    frances_2:
+        name: Francés
+        level: Medio
+    frances_3:
+        name: Francés
+        level: Avanzado
+    aleman_1:
+        name: Alemán
+        level: Básico
+    aleman_2:
+        name: Alemán
+        level: Medio
+    aleman_3:
+        name: Alemán
+        level: Avanzado
+    italiano_1:
+        name: Italiano
+        level: Básico
+    italiano_2:
+        name: Italiano
+        level: Medio
+    italiano_3:
+        name: Italiano
+        level: Avanzado
+    arabe_1:
+        name: Árabe
+        level: Básico
+    arabe_2:
+        name: Árabe
+        level: Medio
+    arabe_3:
+        name: Árabe
+        level: Avanzado
+    portugues_1:
+        name: Portugués
+        level: Básico
+    portugues_2:
+        name: Portugués
+        level: Básico
+    portugues_1:
+        name: Portugués
+        level: Básico
